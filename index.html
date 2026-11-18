@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Flash Sale · Relatório de pushes</title>
+<style>
+:root{--bg:#f3f4f7;--s:#fff;--ink:#161a24;--mu:#5d6475;--line:#e0e3ea;--ac:#d9381e;--acs:#fde9e4;--good:#1d7a4b;--goods:#e1f3e9;--bad:#b3261e;--info:#2c4fa3;--infos:#e5ebf9;--r:14px;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#11141b;--s:#1a1e28;--ink:#eceef3;--mu:#9aa1b2;--line:#2b303d;--ac:#ff6a4d;--acs:#3a1f19;--good:#5fd39a;--goods:#15301f;--bad:#ff8077;--info:#8aa8f5;--infos:#1b2440;color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:640px;margin:0 auto;padding:18px 16px 40px;display:grid;gap:14px}
+h1,h2,h3{margin:0;line-height:1.2;text-wrap:balance}
+h1{font-size:23px}h2{font-size:17px}h3{font-size:15px}
+.sub{color:var(--mu);font-size:13px}
+.num{font-variant-numeric:tabular-nums}
+.card{background:var(--s);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:10px}
+.seg{display:flex;background:var(--s);border:1px solid var(--line);border-radius:12px;padding:3px;position:sticky;top:8px;z-index:3}
+.seg button{flex:1;border:0;background:none;padding:11px 8px;border-radius:9px;font:600 14px inherit;font-family:inherit;color:var(--mu);cursor:pointer;min-height:44px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--s)}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.big{grid-column:1/-1;background:var(--s);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.big .v{font-size:40px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+.k{font-size:12px;color:var(--mu)}
+.d{font-size:13px;font-weight:700;margin-top:4px}.d.up{color:var(--good)}.d.down{color:var(--bad)}
+.tile{background:var(--s);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.tile .v{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.top{display:grid;gap:8px}
+.tp{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;background:var(--s);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.tp .rk{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--bg)}
+.tp:first-child{border:2px solid var(--good)}.tp:first-child .rk{background:var(--goods);color:var(--good)}
+.tp .t{font-weight:700;overflow-wrap:anywhere}.tp .s{font-size:12px;color:var(--mu)}
+.tp .p{font-size:22px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}.tp .p small{display:block;font-size:11px;font-weight:500;color:var(--mu)}
+.bars{display:grid;gap:12px}
+.br{display:grid;grid-template-columns:1fr auto;gap:3px 10px;font-size:13px}
+.br .l{min-width:0;overflow-wrap:anywhere}.br .v{font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.tr{grid-column:1/-1;height:10px;border-radius:5px;background:var(--bg);border:1px solid var(--line);overflow:hidden;position:relative}
+.tr i{position:absolute;inset:0 auto 0 0;background:var(--info);border-radius:5px}.br.best .tr i{background:var(--good)}
+.tr b{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink);opacity:.45}
+.ab{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ab div{background:var(--bg);border-radius:10px;padding:10px}.ab .w{outline:2px solid var(--good)}
+.ab .v{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--infos);color:var(--info)}
+ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.li{display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}.li:first-of-type{border-top:0}
+.li .h{font-weight:700;font-variant-numeric:tabular-nums;min-width:104px;white-space:nowrap;color:var(--mu);flex:none}
+.note{font-size:13px;color:var(--mu)}
+.callout{background:var(--goods);border-radius:10px;padding:10px 12px;font-size:14px}
+footer{font-size:12px;color:var(--mu);text-align:center}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Pushes do TicTac Shop</h1>
+    <div class="sub" id="upd">Flash Sale</div>
+  </header>
+  <div class="seg" role="group" aria-label="Período">
+    <button id="b-sem" aria-pressed="true">Semana</button>
+    <button id="b-dia" aria-pressed="false">Dia</button>
+  </div>
+  <section id="sem"></section>
+  <section id="dia" hidden></section>
+  <footer>Dados do Pushwoosh. Taxa de abertura = aberturas ÷ enviados.</footer>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+const R = window.REL;
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pc = (v) => v == null ? "—" : v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "%";
+const n = (v) => (v ?? 0).toLocaleString("pt-BR");
+const dl = (d, o) => new Date(d + "T12:00:00-03:00").toLocaleDateString("pt-BR", Object.assign({ timeZone: "America/Sao_Paulo" }, o || { day: "2-digit", month: "2-digit" }));
+if (!R) { $("#sem").innerHTML = '<div class="card">Relatório ainda não gerado.</div>'; return; }
+$("#upd").textContent = "Flash Sale · atualizado " + new Date(R.atualizado).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+
+function bars(rows, avg) {
+  const max = Math.max(...rows.map(r => r.taxa || 0), avg || 0, .01); const best = Math.max(...rows.map(r => r.taxa || 0));
+  return '<div class="bars">' + rows.map(r => `<div class="br ${rows.length > 2 && r.taxa === best ? "best" : ""}"><span class="l">${r.l}</span><span class="v">${pc(r.taxa)}</span><div class="tr"><i style="width:${(r.taxa || 0) / max * 100}%"></i>${avg ? `<b style="left:${avg / max * 100}%"></b>` : ""}</div></div>`).join("") + "</div>" + (avg ? `<div class="note">Linha = média do período (${pc(avg)}).</div>` : "");
+}
+function abBox(ab) {
+  const wa = ab.A.taxa > ab.B.taxa, wb = ab.B.taxa > ab.A.taxa;
+  return `<div class="ab"><div class="${wa ? "w" : ""}"><div class="k">A · ${esc(ab.A.rotulo)}</div><div class="v">${pc(ab.A.taxa)}</div><div class="k num">${n(ab.A.abertos)} de ${n(ab.A.enviados)}</div></div><div class="${wb ? "w" : ""}"><div class="k">B · ${esc(ab.B.rotulo)}</div><div class="v">${pc(ab.B.taxa)}</div><div class="k num">${n(ab.B.abertos)} de ${n(ab.B.enviados)}</div></div></div>`;
+}
+function renderSem() {
+  const w = R.semana; const delta = w.anterior && w.taxa != null ? w.taxa - w.anterior.taxa : null;
+  const top = w.lista.slice().sort((a, b) => b.taxa - a.taxa);
+  const avg = w.taxa;
+  $("#sem").innerHTML = `<div style="display:grid;gap:14px">
+  <div class="hero">
+    <div class="big"><div class="k">Taxa de abertura · ${dl(w.de)} a ${dl(w.ate)}</div><div class="v">${pc(w.taxa)}</div>${delta != null ? `<div class="d ${delta >= 0 ? "up" : "down"}">${delta >= 0 ? "▲" : "▼"} ${pc(Math.abs(delta)).replace("%", "")} ponto vs ${esc(w.anterior.rotulo)} (${pc(w.anterior.taxa)})</div>` : ""}</div>
+    <div class="tile"><div class="k">Pushes</div><div class="v">${n(w.pushes)}</div></div>
+    <div class="tile"><div class="k">Aberturas</div><div class="v">${n(w.abertos)}</div></div>
+  </div>
+  <div class="card"><h2>Melhores da semana</h2><div class="top">${top.slice(0, 3).map((p, i) => `<div class="tp"><span class="rk">${i + 1}</span><div><div class="t">${esc(p.titulo)}</div><div class="s">${esc(p.loja)} · ${dl(p.data, { weekday: "short", day: "2-digit", month: "2-digit" })} ${esc(p.hora)}</div></div><div class="p">${pc(p.taxa)}<small class="num">${n(p.abertos)} de ${n(p.enviados)}</small></div></div>`).join("")}</div></div>
+  <div class="card"><h2>Todos os pushes</h2>${bars(top.map(p => ({ l: `<b>${esc(p.loja)}</b> · ${esc(p.produto)} <span class="note num">${dl(p.data)} ${esc(p.hora)}</span>`, taxa: p.taxa })), avg)}</div>
+  ${(w.testes || []).length ? `<div class="card"><h2>Testes A/B</h2>${w.testes.map(t => `<div style="display:grid;gap:8px"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><h3>${esc(t.nome)}</h3><span class="pill">${esc(t.status)}</span></div>${t.A ? abBox(t) : ""}${t.nota ? `<div class="note">${esc(t.nota)}</div>` : ""}</div>`).join('<hr style="border:0;border-top:1px solid var(--line);margin:4px 0">')}</div>` : ""}
+  ${(w.aprendizados || []).length ? `<div class="card"><h2>O que aprendemos</h2><ul>${w.aprendizados.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>` : ""}
+  ${(w.proximos || []).length ? `<div class="card"><h2>Próximos envios</h2><div>${w.proximos.map(p => `<div class="li"><span class="h">${dl(p.data, { weekday: "short", day: "2-digit" })} ${esc(p.hora)}</span><span>${esc(p.titulo)}</span></div>`).join("")}</div></div>` : ""}
+  </div>`;
+}
+function renderDia() {
+  const d = R.dia; if (!d) { $("#dia").innerHTML = '<div class="card">Sem relatório do dia ainda.</div>'; return; }
+  const ls = (d.lista || []).slice();
+  $("#dia").innerHTML = `<div style="display:grid;gap:14px">
+  <div class="hero">
+    <div class="big"><div class="k">Taxa de abertura · ${dl(d.data, { weekday: "long", day: "2-digit", month: "2-digit" })}</div><div class="v">${pc(d.taxa)}</div></div>
+    <div class="tile"><div class="k">Pushes</div><div class="v">${n(d.pushes)}</div></div>
+    <div class="tile"><div class="k">Aberturas</div><div class="v">${n(d.abertos)}</div></div>
+  </div>
+  ${d.destaque ? `<div class="callout">⭐ ${esc(d.destaque)}</div>` : ""}
+  <div class="card"><h2>Pushes do dia</h2>${ls.length ? bars(ls.map(p => ({ l: `<span class="num">${esc(p.hora)}</span> · ${esc(p.titulo)}`, taxa: p.taxa })), d.taxa) : '<div class="note">Nenhum push neste dia.</div>'}</div>
+  ${(d.hoje || []).length ? `<div class="card"><h2>Programados para hoje</h2><ul>${d.hoje.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>` : ""}
+  </div>`;
+}
+function show(which) { $("#sem").hidden = which !== "sem"; $("#dia").hidden = which !== "dia"; $("#b-sem").setAttribute("aria-pressed", which === "sem"); $("#b-dia").setAttribute("aria-pressed", which === "dia"); }
+$("#b-sem").onclick = () => show("sem"); $("#b-dia").onclick = () => show("dia");
+renderSem(); renderDia();
+if (/dia/.test(location.hash)) show("dia");
+})();
+</script>
+</body>
+</html>
